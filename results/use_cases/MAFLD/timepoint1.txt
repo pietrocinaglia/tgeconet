@@ -1,0 +1,6 @@
+GCKR HSD17B13 {'pvalue': 0.00044}
+GCKR INSR {'pvalue': 0.03267}
+GCKR PNPLA3 {'pvalue': 0.00329}
+HSD17B13 INSR {'pvalue': 0.01085}
+HSD17B13 PNPLA3 {'pvalue': 0.00034}
+INSR PNPLA3 {'pvalue': 0.01359}

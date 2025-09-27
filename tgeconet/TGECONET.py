@@ -10,6 +10,7 @@ import statistics
 from itertools import combinations
 from joblib import Parallel, delayed
 import matplotlib.pyplot as plt
+import json
 
 #import warnings
 #warnings.simplefilter('ignore')
@@ -138,7 +139,7 @@ class TGECONET:
             print("- Gene Expression Data [OK]\n")
             print("[INFO] Constructing temporal layers...")
 
-        temporal_network = Parallel(n_jobs=-1, backend="multiprocessing")(
+        temporal_network = Parallel(n_jobs=1, backend="multiprocessing")(
             delayed(self._build_layer)(age_group, self.gtex_data, gene_symbols, gene_pairs) for age_group in self.AGES
         )
 
@@ -230,7 +231,7 @@ class TGECONET:
         return output
 
 
-    def extract_high_degree_genes(self, temporal_network: list, top_n: int = 10) -> dict:
+    def extract_high_degree_genes(self, temporal_network:list, top_n:int=10, output_path:str=None) -> dict:
         top_genes = {}
 
         for i, G in enumerate(temporal_network):
@@ -242,6 +243,10 @@ class TGECONET:
 
             degrees = sorted(G.degree, key=lambda x: x[1], reverse=True)
             top_genes[age_group] = degrees[:top_n]
+
+        if output_path is not None:
+            with open(output_path+'top'+str(top_n)+'_genes.txt', 'w') as file:
+                file.write(json.dumps(top_genes))
 
         return top_genes
 

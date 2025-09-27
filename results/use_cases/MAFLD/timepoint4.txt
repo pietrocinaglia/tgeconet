@@ -1,0 +1,6 @@
+GCKR HSD17B13 {'pvalue': 1e-05}
+GCKR SREBF1 {'pvalue': 0.03156}
+GCKR PNPLA3 {'pvalue': 7e-05}
+HSD17B13 SREBF1 {'pvalue': 0.0308}
+HSD17B13 PNPLA3 {'pvalue': 2e-05}
+SREBF1 PNPLA3 {'pvalue': 0.03705}
