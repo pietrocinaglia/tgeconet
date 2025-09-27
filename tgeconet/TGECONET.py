@@ -33,6 +33,7 @@ class TGECONET:
     genes_of_interest = list()
     tissues_of_interest = list()
     threshold = 0.05
+    log = list()
     verbose = False
 
     def __init__(self, genes_of_interest:list, tissues_of_interest:list, threshold:float=0.05, verbose:bool=False, metadata:pd.DataFrame=None):
@@ -46,12 +47,14 @@ class TGECONET:
         
         if self.verbose:
             print("[INFO] Loading metadata...")
+
         if metadata is not None:
             self.metadata = metadata
         else:
             metadata = pd.read_csv(self.WORKSPACE + '../data/' + 'metadata.csv', header=0, sep=" ")
         metadata = metadata[metadata['gene_symbol'].isin(self.genes_of_interest)]
         self.metadata = dict(zip(metadata.gene_symbol, metadata.ensembl_id))
+
         if self.verbose:
             print("- Metadata [OK] ")
 
@@ -75,7 +78,6 @@ class TGECONET:
             raise Exception("The action in Data Retrieving is not supported.")
 
     def _extract_expression_values(self, gene_data):
-
         if len(gene_data) == 1:
             values = gene_data.data.values[0]
             return values if isinstance(values, list) else [values]
@@ -112,6 +114,7 @@ class TGECONET:
 
             try:
                 _, p = scipy.stats.pearsonr(u_gexp, v_gexp)
+                self.log.append([u, v, round(p, 5), age_group])
                 if p < self.threshold:
                     layer.add_edge(u, v, pvalue=round(p, 5))
             except Exception:
@@ -123,6 +126,8 @@ class TGECONET:
     def construct_temporal_network(self) -> list:
         if self.verbose:
             print("[INFO] Retrieving gene expression data...")
+
+        self.log = list() # clear the log
 
         gene_code_ids = list(self.metadata.values())
         gene_symbols = list(self.metadata.keys())
@@ -146,7 +151,7 @@ class TGECONET:
         if self.verbose:
             print("[INFO] Temporal network construction complete.")
 
-        return temporal_network
+        return temporal_network, self.log
 
 
     def analyze_temporal_network(self, temporal_network: list, output_path:str=None) -> pd.DataFrame:
