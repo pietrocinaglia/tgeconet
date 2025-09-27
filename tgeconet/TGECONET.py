@@ -251,7 +251,7 @@ class TGECONET:
         return top_genes
 
 
-    def export_adjacency_matrices(self, temporal_network: list, output_path: str):#, nan: int= 1):
+    def export_adjacency_matrices(self, temporal_network: list, output_path: str):
         for i, G in enumerate(temporal_network):
             nodes = list(G.nodes())
             # Create adjacency matrix weighted by 'pvalue'
