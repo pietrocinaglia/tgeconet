@@ -5,9 +5,13 @@
 
 ## Additional Information
 
-Age-related gene expression data is retrieved by Genotype-Tissue Expression (GTEx) API V2 (https://gtexportal.org)
+Cinaglia, P. (2025). tGeCoNet: a framework for constructing temporal gene co-expression networks. Neurocomputing, (132151), 132151. doi:10.1016/j.neucom.2025.132151
 
-Time points were based on the following age ranges: ['20-29', '30-39', '40-49', '50-59', '60-69', '70-79']
+Time-points modelling is inspired by our previous work on building synthetic interconnected networks: **GIN** (https://pietrocinaglia.github.io/gin).
+
+Cinaglia, P. (2024). GIN: A web-application for constructing synthetic datasets of interconnected networks in bioinformatics. SoftwareX, 26(101647), 101647. doi:10.1016/j.softx.2024.101647
+
+**tGeCoNet** retrieves real-world gene expression data from Genotype-Tissue Expression (GTEx) API V2 (https://gtexportal.org). 
 
 
 ## Table of Contents
